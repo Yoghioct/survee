@@ -1,0 +1,27 @@
+{
+  "name": "Survee",
+  "version": "0.0.1",
+  "description": "Build and simply collect data or feedback from users",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryczko/Survee.git"
+  },
+  "keywords": [
+    "form",
+    "forms",
+    "survey",
+    "surveys",
+    "feedback",
+    "emoji"
+  ],
+  "author": "Survee team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ryczko/Survee/issues"
+  },
+  "homepage": "https://github.com/Ryczko/Survee"
+}

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `question` MODIFY `type` ENUM('EMOJI', 'INPUT', 'CHOICE', 'RATE', 'SECTION', 'NUMBER', 'DATE', 'TEXTAREA') NOT NULL;
