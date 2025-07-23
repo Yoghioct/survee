@@ -22,9 +22,11 @@ import SummaryResults from 'features/surveys/features/SurveyResults/components/S
 import IndividualResults from 'features/surveys/features/SurveyResults/components/IndividualResults/IndividualResults';
 import * as XLSX from 'xlsx';
 import ExcelIcon from 'shared/components/icons/ExcelIcon';
+import { useCurrentUser } from 'shared/hooks/useCurrentUser';
 
 export default function SurveyResults() {
   const { t } = useTranslation('surveyAnswer');
+  const { currentUser, isAdmin } = useCurrentUser();
 
   const {
     surveyId,
@@ -96,13 +98,17 @@ export default function SurveyResults() {
             />
           </div>
 
-          <Button
-            title={'Edit survey'}
-            onClick={handleEditSurvey}
-            className="grow sm:grow-0"
-            variant={ButtonVariant.PRIMARY}
-            icon={<PencilIcon className="h-5 w-5" />}
-          />
+          {/* Show Edit button only for ADMIN users */}
+          {isAdmin && (
+            <Button
+              title={'Edit survey'}
+              onClick={handleEditSurvey}
+              className="grow sm:grow-0"
+              variant={ButtonVariant.PRIMARY}
+              icon={<PencilIcon className="h-5 w-5" />}
+            />
+          )}
+
           <Button
             title={t('shareSurvey')}
             onClick={openShareSurveyModal}
@@ -128,13 +134,16 @@ export default function SurveyResults() {
             icon={<ExcelIcon className="h-5 w-5" />}
           />
 
-          <Button
-            variant={ButtonVariant.DANGER}
-            title={t('deleteSurveyButtonTitle')}
-            onClick={openDeleteSurveyModal}
-            className="grow sm:grow-0"
-            icon={<TrashIcon className="h-5 w-5" />}
-          />
+          {/* Show Delete button only for ADMIN users */}
+          {isAdmin && (
+            <Button
+              variant={ButtonVariant.DANGER}
+              title={t('deleteSurveyButtonTitle')}
+              onClick={openDeleteSurveyModal}
+              className="grow sm:grow-0"
+              icon={<TrashIcon className="h-5 w-5" />}
+            />
+          )}
         </div>
       </div>
 
