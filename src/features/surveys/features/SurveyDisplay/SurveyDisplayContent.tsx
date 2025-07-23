@@ -70,7 +70,7 @@ export default function SurveyDisplayContent() {
   return (
     <div className="w-full">
           <div className='flex justify-center m-6'>
-            <LogoCompany width={220} />
+            <LogoCompany width={500} />
           </div>
       {(() => {
         const hasSectionBreakers = formData?.questions?.some(q => q.type === 'SECTION_BREAKER');
