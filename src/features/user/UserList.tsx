@@ -297,7 +297,7 @@ export const UserList: React.FC = () => {
               <select
                 value={formData.role}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, role: e.target.value as 'ADMIN' | 'USER' })}
-                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="ADMIN">ADMIN</option>
                 <option value="USER">USER</option>
@@ -308,7 +308,7 @@ export const UserList: React.FC = () => {
               <select
                 value={formData.companyId}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, companyId: e.target.value })}
-                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="">None</option>
                 {companies.map((company) => (
@@ -375,7 +375,7 @@ export const UserList: React.FC = () => {
               <select
                 value={formData.role}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, role: e.target.value as 'ADMIN' | 'USER'})}
-                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="ADMIN">ADMIN</option>
                 <option value="USER">USER</option>
@@ -386,7 +386,7 @@ export const UserList: React.FC = () => {
               <select
                 value={formData.companyId}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, companyId: e.target.value })}
-                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="">None</option>
                 {companies.map((company) => (

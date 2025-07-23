@@ -49,7 +49,7 @@ const CompanyAnswersComponent: React.FC<CompanyAnswersComponentProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
         <span className="ml-2 text-gray-600">Loading companies...</span>
       </div>
     );
@@ -83,7 +83,7 @@ const CompanyAnswersComponent: React.FC<CompanyAnswersComponentProps> = ({
             className={`
               flex items-center p-3 rounded-lg border cursor-pointer transition-all duration-200
               ${isSelected 
-                ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200' 
+                ? 'border-purple-500 bg-purple-50 ring-2 ring-purple-200' 
                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               }
               ${hasError ? 'border-red-300' : ''}
@@ -95,17 +95,17 @@ const CompanyAnswersComponent: React.FC<CompanyAnswersComponentProps> = ({
               value={company.id}
               checked={isSelected}
               onChange={() => handleSelectionChange(company.id)}
-              className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+              className="h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500"
             />
             <span 
               className={`ml-3 text-sm font-medium ${
-                isSelected ? 'text-blue-900' : 'text-gray-700'
+                isSelected ? 'text-purple-900' : 'text-gray-700'
               }`}
             >
               {company.name}
             </span>
             {isSelected && (
-              <CheckCircleIcon className="h-5 w-5 ml-auto text-blue-500" />
+              <CheckCircleIcon className="h-5 w-5 ml-auto text-purple-500" />
             )}
           </label>
         );

@@ -27,7 +27,7 @@ export default function NewQuestionModalButton({
           "w-full h-full flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all duration-200",
           disabled 
             ? "opacity-50 cursor-not-allowed bg-gray-50 border-gray-200 text-gray-400" 
-            : "bg-white border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm active:scale-95"
+            : "bg-white border-gray-200 hover:border-purple-300 hover:bg-purple-50 hover:shadow-sm active:scale-95"
         )}
         data-test-id={testSelector}
         disabled={disabled}

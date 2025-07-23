@@ -12,7 +12,7 @@ export default function SectionAnswersComponent({
 
   return (
     <div className="text-center py-8">
-      <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center mb-4">
+      <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
         <svg 
           className="w-8 h-8 text-white" 
           fill="none" 

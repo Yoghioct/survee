@@ -12,11 +12,11 @@ export default function SectionBreakerQuestionBlock({
 
   return (
     <div className="w-full">
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 rounded-lg">
+      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-500 p-6 rounded-lg">
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
             <svg 
-              className="w-6 h-6 text-blue-600" 
+              className="w-6 h-6 text-purple-800" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -38,7 +38,7 @@ export default function SectionBreakerQuestionBlock({
             </p>
           </div>
           <div className="flex-shrink-0">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
               Step {Math.floor(questionIndex / 10) + 1}
             </span>
           </div>

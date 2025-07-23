@@ -12,11 +12,11 @@ export default function SectionQuestionBlock({
 
   return (
     <div className="w-full">
-      <div className="bg-gradient-to-r from-purple-50 to-blue-50 border-l-4 border-purple-500 p-4 rounded-lg">
+      <div className="bg-gradient-to-r from-purple-50 to-purple-50 border-l-4 border-purple-500 p-4 rounded-lg">
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
             <svg 
-              className="w-6 h-6 text-purple-600" 
+              className="w-6 h-6 text-purple-800" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"

@@ -132,16 +132,16 @@ export default function QuestionBlockFactory({
           questionIndex={questionIndex}
         />
       )}
-      {questionData.type === QuestionType.SECTION && (
+      {/* {questionData.type === QuestionType.SECTION && (
         <SectionQuestionBlock
           questionIndex={questionIndex}
         />
-      )}
-      {questionData.type === QuestionType.SECTION_BREAKER && (
+      )} */}
+      {/* {questionData.type === QuestionType.SECTION_BREAKER && (
         <SectionBreakerQuestionBlock
           questionIndex={questionIndex}
         />
-      )}
+      )} */}
     </QuestionBlockWrapper>
   );
 }

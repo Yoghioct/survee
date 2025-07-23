@@ -146,8 +146,8 @@ export default function IndividualResults() {
                 )}
                 {questionType === QuestionType.COMPANY && (
                   <div className="mb-3 mt-4">
-                    <div className="inline-flex items-center rounded-lg border border-blue-200 bg-blue-50 px-4 py-2">
-                      <span className="text-blue-800 font-medium">{answer}</span>
+                    <div className="inline-flex items-center rounded-lg border border-purple-200 bg-purple-50 px-4 py-2">
+                      <span className="text-purple-800 font-medium">{answer}</span>
                     </div>
                   </div>
                 )}

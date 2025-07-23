@@ -47,11 +47,11 @@ export const AnswersComponentFactory = (
   return (
     <div className="mb-3 rounded-md border bg-white p-4 shadow">
       <div
-        className={`mb-4 rounded-md p-4 ${
+        className={`rounded-md p-4 ${
           currentQuestion.type === QuestionType.SECTION
             ? 'bg-purple-900 text-white'
             : currentQuestion.type === QuestionType.SECTION_BREAKER
-            ? 'bg-blue-600 text-white'
+            ? 'bg-purple-800 text-white'
             : ''
         }`}
       >
@@ -101,12 +101,12 @@ export const AnswersComponentFactory = (
       {currentQuestion.type === QuestionType.COMPANY && (
         <CompanyAnswersComponent questionData={currentQuestion} />
       )}
-      {currentQuestion.type === QuestionType.SECTION && (
+      {/* {currentQuestion.type === QuestionType.SECTION && (
         <SectionAnswersComponent questionData={currentQuestion} />
-      )}
-      {currentQuestion.type === QuestionType.SECTION_BREAKER && (
+      )} */}
+      {/* {currentQuestion.type === QuestionType.SECTION_BREAKER && (
         <SectionBreakerAnswersComponent questionData={currentQuestion} />
-      )}
+      )} */}
 
       {formData.oneQuestionPerStep && (
         <div className="mt-6 flex flex-col-reverse gap-x-4 gap-y-2 sm:flex-row">

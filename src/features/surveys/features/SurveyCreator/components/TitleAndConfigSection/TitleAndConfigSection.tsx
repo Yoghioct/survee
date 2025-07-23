@@ -441,7 +441,7 @@ export default function TitleAndConfigSection() {
                           </>
                         ) : (
                           <select
-                            className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                             value={
                               Array.isArray(cond.question)
                                 ? cond.question[0] || ''
@@ -458,7 +458,7 @@ export default function TitleAndConfigSection() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <select
-                          className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                           value={cond.operator}
                           onChange={e => updateCondition(i, ci, { operator: e.target.value })}
                         >
@@ -483,14 +483,14 @@ export default function TitleAndConfigSection() {
                         {typeof cond.operator === 'string' && cond.operator.startsWith('sum') ? (
                           <input
                             type="number"
-                            className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                             value={cond.value}
                             onChange={e => updateCondition(i, ci, { value: e.target.value })}
                             placeholder="Enter a sum value"
                           />
                         ) : (
                           <input
-                            className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full border rounded px-3 py-2 h-10 text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                             value={cond.value}
                             onChange={e => updateCondition(i, ci, { value: e.target.value })}
                             placeholder="Enter a value"
@@ -513,7 +513,7 @@ export default function TitleAndConfigSection() {
                 ))}
                 <button 
                   type="button" 
-                  className="text-xs text-blue-600 hover:text-blue-800 transition-colors mb-3 px-2 py-1 rounded hover:bg-blue-50" 
+                  className="text-xs text-purple-600 hover:text-purple-800 transition-colors mb-3 px-2 py-1 rounded hover:bg-purple-50" 
                   onClick={() => addCondition(i)}
                 >
                   + Add Condition
@@ -521,7 +521,7 @@ export default function TitleAndConfigSection() {
                 <div className="mt-3">
                   <label className="block text-xs font-medium text-gray-700 mb-2">Message if rule matches</label>
                   <textarea
-                    className="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
+                    className="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-y"
                     rows={3}
                     placeholder="Message to display if condition is met"
                     value={rule.message}
@@ -532,7 +532,7 @@ export default function TitleAndConfigSection() {
             ))}
             <button 
               type="button" 
-              className="text-xs text-blue-600 hover:text-blue-800 transition-colors px-3 py-2 rounded border border-blue-200 hover:bg-blue-50 w-full sm:w-auto" 
+              className="text-xs text-purple-600 hover:text-purple-800 transition-colors px-3 py-2 rounded border border-purple-200 hover:bg-purple-50 w-full sm:w-auto" 
               onClick={addRule}
             >
               + Add Rule
@@ -576,7 +576,7 @@ export default function TitleAndConfigSection() {
             
             {loadingCompanies ? (
               <div className="flex items-center justify-center py-4">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-500"></div>
                 <span className="ml-2 text-gray-600">Loading companies...</span>
               </div>
             ) : (

@@ -57,7 +57,7 @@ export default function SurveyDisplayContent() {
           </label>
         </div>
         <button
-          className="px-4 py-2 bg-purple-600 text-white rounded disabled:opacity-50 w-full"
+          className="px-4 py-2 bg-purple-800 text-white rounded disabled:opacity-50 w-full"
           disabled={!disclaimerAccepted}
           onClick={() => setDisclaimerNext(true)}
         >
