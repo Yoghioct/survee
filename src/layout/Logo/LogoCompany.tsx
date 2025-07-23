@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import logo from '../../../public/images/logo-company.svg';
+import logo from '../../../public/images/logo-company.png';
 import Image from 'next/image';
 
 interface LogoProps {
