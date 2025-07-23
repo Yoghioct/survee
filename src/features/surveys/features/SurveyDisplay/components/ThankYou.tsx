@@ -26,8 +26,8 @@ function mapAnswerToValue(answer: string) {
   if (a === 'tidak' || a === 'no') return 0;
 
   if (a === 'tidak sama sekali') return 0;
-  if (a === 'kurang dari 1 minggu') return 1;
-  if (a === 'lebih dari 1 minggu') return 2;
+  if (a === 'kurang dari 1 (satu) minggu') return 1;
+  if (a === 'lebih dari 1 (satu) minggu') return 2;
   if (a === 'hampir setiap hari') return 3;
   
   // Try to parse as number
