@@ -4,6 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
 import ReactMarkdown from 'react-markdown';
 import { CheckCircleIcon } from '@heroicons/react/solid';
+import { useCurrentUser } from 'shared/hooks/useCurrentUser';
 
 // function mapAnswerToScore(answer: string) {
 //   if (!answer) return 0;
@@ -29,7 +30,7 @@ function mapAnswerToValue(answer: string) {
   if (a === 'kurang dari 1 (satu) minggu') return 1;
   if (a === 'lebih dari 1 (satu) minggu') return 2;
   if (a === 'hampir setiap hari') return 3;
-  
+
   // Try to parse as number
   const n = Number(answer);
   if (!isNaN(n)) return n;
@@ -45,9 +46,19 @@ function evalCondition(cond: any, questionsById: any) {
     const sum = questionIds.reduce((acc: number, qid: any) => {
       let ans = questionsById[qid]?.answer;
       let num = mapAnswerToValue(ans);
+      console.log(`Debug Sum: Question ${qid}, Answer: "${ans}", Mapped Value: ${num}, Running Sum: ${acc + num}`);
       return acc + num;
     }, 0);
     const target = Number(cond.value);
+    console.log(`Debug Sum Result: Final sum = ${sum}, Target = ${target}, Operator = ${op}, Result = ${
+      op === '==' ? sum === target :
+      op === '!=' ? sum !== target :
+      op === '>' ? sum > target :
+      op === '<' ? sum < target :
+      op === '>=' ? sum >= target :
+      op === '<=' ? sum <= target :
+      false
+    }`);
     switch (op) {
       case '==': return sum === target;
       case '!=': return sum !== target;
@@ -89,6 +100,7 @@ function evalCondition(cond: any, questionsById: any) {
 export default function ThankYou() {
   const { t } = useTranslation('thankyou');
   const { formData } = useSurveyDisplayContext();
+  const { isAdmin } = useCurrentUser();
 
   let customMessages: string[] = [];
   if (formData?.thankYouLogic && Array.isArray(formData.thankYouLogic)) {
@@ -98,17 +110,12 @@ export default function ThankYou() {
       questionsById[(q as any).draftId || (q as any).id] = q;
     });
 
-
-    // console.log('DEBUG thankYouLogic:', formData.thankYouLogic);
-    // console.log('DEBUG questionsById:', questionsById);
     customMessages = formData.thankYouLogic.filter((rule: any, idx: number) => {
       if (!rule || typeof rule !== 'object' || !Array.isArray(rule.conditions)) return false;
       const condResults = rule.conditions.map((cond: any) => evalCondition(cond, questionsById));
       return rule.conditions.every((cond: any, ci: number) => condResults[ci]);
     }).map((rule: any) => rule.message).filter(Boolean);
   }
-
-  // console.log('customMessages:', customMessages);
 
   // if (customMessages.length > 0) {
   //   return <pre>{customMessages}</pre>
@@ -137,10 +144,128 @@ export default function ThankYou() {
                 <ReactMarkdown>{msg || '*[Pesan kosong]*'}</ReactMarkdown>
               </div>
             ))}
-
           </>
         ) : (
           <></>
+        )}
+
+        {/* Admin Debug Section */}
+        {isAdmin && (
+          <div className="mt-8 border-t pt-6">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold text-red-600 mb-2">🔧 Admin Debug Log</h3>
+              <p className="text-sm text-gray-600 mb-4">This section is only visible to administrators</p>
+            </div>
+
+            {/* Thank You Logic Debug */}
+            <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded">
+              <h4 className="font-medium text-gray-800 mb-2">Thank You Logic:</h4>
+              <pre className="text-xs bg-white p-3 rounded border overflow-x-auto">
+                {JSON.stringify((formData?.thankYouLogic as any[]) || [], null, 2)}
+              </pre>
+            </div>
+
+            {/* Questions By ID Debug */}
+            <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded">
+              <h4 className="font-medium text-gray-800 mb-2">Questions By ID:</h4>
+              <pre className="text-xs bg-white p-3 rounded border overflow-x-auto">
+                {JSON.stringify(
+                  formData?.questions?.reduce((acc: any, q: any) => {
+                    acc[(q as any).draftId || (q as any).id] = {
+                      id: (q as any).id,
+                      draftId: (q as any).draftId,
+                      title: (q as any).title,
+                      type: (q as any).type,
+                      answer: (q as any).answer,
+                      mappedValue: mapAnswerToValue((q as any).answer)
+                    };
+                    return acc;
+                  }, {}) || {},
+                  null,
+                  2
+                )}
+              </pre>
+            </div>
+
+            {/* Evaluated Conditions Debug */}
+            <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded">
+              <h4 className="font-medium text-gray-800 mb-2">Condition Evaluation:</h4>
+              <div className="text-xs bg-white p-3 rounded border">
+                {(formData?.thankYouLogic as any[])?.map((rule: any, ruleIndex: number) => {
+                  const questionsById: any = {};
+                  formData.questions.forEach(q => {
+                    questionsById[(q as any).draftId || (q as any).id] = q;
+                  });
+
+                  return (
+                    <div key={ruleIndex} className="mb-4 border-b pb-3 last:border-b-0">
+                      <div className="font-medium text-blue-600 mb-1">Rule {ruleIndex + 1}:</div>
+                      <div className="mb-1"><strong>Message:</strong> {rule.message || '[No message]'}</div>
+                      <div className="mb-2"><strong>Conditions:</strong></div>
+                      {rule.conditions?.map((cond: any, condIndex: number) => {
+                        const result = evalCondition(cond, questionsById);
+                        
+                        // Special handling for sum operations
+                        if (typeof cond.operator === 'string' && cond.operator.startsWith('sum')) {
+                          const questionIds = Array.isArray(cond.question) ? cond.question : [cond.question];
+                          const sumDetails = questionIds.map((qid: any) => {
+                            const questionAnswer = questionsById[qid]?.answer;
+                            const mappedValue = mapAnswerToValue(questionAnswer);
+                            return { qid, answer: questionAnswer, mapped: mappedValue };
+                          });
+                          const totalSum = sumDetails.reduce((acc: number, item: any) => acc + item.mapped, 0);
+                          
+                          return (
+                            <div key={condIndex} className="ml-4 mb-2 p-2 bg-gray-50 rounded">
+                              <div>Condition {condIndex + 1}: <span className={result ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>{result ? 'TRUE' : 'FALSE'}</span></div>
+                              <div>Operator: {cond.operator}</div>
+                              <div>Expected Value: {cond.value}</div>
+                              <div>Sum Calculation:</div>
+                              <div className="ml-4 text-xs">
+                                {sumDetails.map((item: any, i: number) => (
+                                  <div key={i}>Q{item.qid}: "{item.answer}" → {item.mapped}</div>
+                                ))}
+                                <div className="font-bold border-t mt-1 pt-1">Total Sum: {totalSum}</div>
+                                <div>Comparison: {totalSum} {cond.operator.slice(3)} {cond.value} = {result ? 'TRUE' : 'FALSE'}</div>
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          const questionAnswer = questionsById[cond.question]?.answer;
+                          const mappedValue = mapAnswerToValue(questionAnswer);
+                          
+                          return (
+                            <div key={condIndex} className="ml-4 mb-2 p-2 bg-gray-50 rounded">
+                              <div>Condition {condIndex + 1}: <span className={result ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>{result ? 'TRUE' : 'FALSE'}</span></div>
+                              <div>Question ID: {cond.question}</div>
+                              <div>Operator: {cond.operator}</div>
+                              <div>Expected Value: {cond.value}</div>
+                              <div>Actual Answer: "{questionAnswer}"</div>
+                              <div>Mapped Value: {mappedValue}</div>
+                            </div>
+                          );
+                        }
+                      })}
+                      <div className="mt-2">
+                        <strong>Rule Result:</strong> 
+                        <span className={rule.conditions?.every((cond: any) => evalCondition(cond, questionsById)) ? 'text-green-600 font-bold ml-1' : 'text-red-600 font-bold ml-1'}>
+                          {rule.conditions?.every((cond: any) => evalCondition(cond, questionsById)) ? 'PASSED' : 'FAILED'}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                }) || []}
+              </div>
+            </div>
+
+            {/* Custom Messages Debug */}
+            <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded">
+              <h4 className="font-medium text-gray-800 mb-2">Generated Messages:</h4>
+              <pre className="text-xs bg-white p-3 rounded border overflow-x-auto">
+                {JSON.stringify(customMessages, null, 2)}
+              </pre>
+            </div>
+          </div>
         )}
       </div>
     </div>
