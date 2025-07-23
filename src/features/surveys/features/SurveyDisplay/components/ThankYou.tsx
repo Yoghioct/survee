@@ -17,14 +17,34 @@ import { CheckCircleIcon } from '@heroicons/react/solid';
 //   return 0;
 // }
 
+function mapAnswerToValue(answer: string) {
+  if (!answer) return 0;
+  const a = String(answer).trim().toLowerCase();
+  
+  // Convert "ya" to 1, "tidak" to 0
+  if (a === 'ya' || a === 'yes') return 1;
+  if (a === 'tidak' || a === 'no') return 0;
+
+  if (a === 'tidak sama sekali') return 0;
+  if (a === 'kurang dari 1 minggu') return 1;
+  if (a === 'lebih dari 1 minggu') return 2;
+  if (a === 'hampir setiap hari') return 3;
+  
+  // Try to parse as number
+  const n = Number(answer);
+  if (!isNaN(n)) return n;
+  
+  // Default to 0 if can't parse
+  return 0;
+}
+
 function evalCondition(cond: any, questionsById: any) {
   if (typeof cond.operator === 'string' && cond.operator.startsWith('sum')) {
     const op = cond.operator.slice(3); // e.g. '==', '>=', etc
     const questionIds = Array.isArray(cond.question) ? cond.question : [cond.question];
     const sum = questionIds.reduce((acc: number, qid: any) => {
       let ans = questionsById[qid]?.answer;
-      let num = Number(ans);
-      if (isNaN(num)) num = 0;
+      let num = mapAnswerToValue(ans);
       return acc + num;
     }, 0);
     const target = Number(cond.value);
@@ -40,8 +60,19 @@ function evalCondition(cond: any, questionsById: any) {
   }else{
     let left = questionsById[cond.question]?.answer;
     let right = cond.value;
+    
+    // For numeric comparisons, convert "ya" to 1 and "tidak" to 0
+    if (['>', '<', '>=', '<=', '+', '-'].includes(cond.operator)) {
+      left = mapAnswerToValue(left);
+      right = Number(right);
+    }
+    
     switch (cond.operator) {
-      case '==': return String(left).trim().toLowerCase() === String(right).trim().toLowerCase();
+      case '==': 
+        // For equality, also check if "ya" equals 1 or "tidak" equals 0
+        if (String(right) === '1' && String(left).trim().toLowerCase() === 'ya') return true;
+        if (String(right) === '0' && String(left).trim().toLowerCase() === 'tidak') return true;
+        return String(left).trim().toLowerCase() === String(right).trim().toLowerCase();
       case '!=': return left != right;
       case '>': return left > right;
       case '<': return left < right;
