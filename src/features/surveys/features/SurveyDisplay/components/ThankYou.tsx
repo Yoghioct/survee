@@ -46,19 +46,19 @@ function evalCondition(cond: any, questionsById: any) {
     const sum = questionIds.reduce((acc: number, qid: any) => {
       let ans = questionsById[qid]?.answer;
       let num = mapAnswerToValue(ans);
-      console.log(`Debug Sum: Question ${qid}, Answer: "${ans}", Mapped Value: ${num}, Running Sum: ${acc + num}`);
+      // console.log(`Debug Sum: Question ${qid}, Answer: "${ans}", Mapped Value: ${num}, Running Sum: ${acc + num}`);
       return acc + num;
     }, 0);
     const target = Number(cond.value);
-    console.log(`Debug Sum Result: Final sum = ${sum}, Target = ${target}, Operator = ${op}, Result = ${
-      op === '==' ? sum === target :
-      op === '!=' ? sum !== target :
-      op === '>' ? sum > target :
-      op === '<' ? sum < target :
-      op === '>=' ? sum >= target :
-      op === '<=' ? sum <= target :
-      false
-    }`);
+    // console.log(`Debug Sum Result: Final sum = ${sum}, Target = ${target}, Operator = ${op}, Result = ${
+    //   op === '==' ? sum === target :
+    //   op === '!=' ? sum !== target :
+    //   op === '>' ? sum > target :
+    //   op === '<' ? sum < target :
+    //   op === '>=' ? sum >= target :
+    //   op === '<=' ? sum <= target :
+    //   false
+    // }`);
     switch (op) {
       case '==': return sum === target;
       case '!=': return sum !== target;
