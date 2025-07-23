@@ -1,8 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 
+// Use relative URLs in production, absolute in development
+const getBaseURL = () => {
+  // If NEXT_PUBLIC_BASE_URL is set, use it
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL;
+  }
+  
+  // In production, use relative URLs (empty string means relative to current domain)
+  // In development, use localhost
+  return process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
+};
+
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
+  baseURL: getBaseURL(),
 });
 
 export const getFetch = <Res>(url: string, params = {}) => {
