@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import { ButtonVariant } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
@@ -7,6 +6,7 @@ import { InferGetServerSidePropsType } from 'next';
 import MainSection from 'features/application/components/MainSection';
 import StandardPageWrapper from 'layout/StandardPageWrapper';
 import withAnimation from 'shared/HOC/withAnimation';
+import SeoHead from 'shared/components/SeoHead';
 
 export async function getServerSideProps() {
   const repositoryData = await fetch(
@@ -27,10 +27,11 @@ function IndexPage({
 
   return (
     <StandardPageWrapper>
-      <Head>
-        <title>{t('title')}</title>
-        <meta name="description" content={t('content')} />
-      </Head>
+      <SeoHead 
+        title={t('title')}
+        description={t('content')}
+        url="https://survey.otsuka.co.id"
+      />
       <div className="pt-12 sm:pt-16">
         <h1 className="leading-tighter mb-4 text-3xl font-extrabold tracking-tighter text-secondary-900 sm:text-4xl md:text-6xl">
           {t('firstPartHeading')}&nbsp;
