@@ -8,6 +8,7 @@ import Github from '../../../public/images/github.svg';
 import Google from '../../../public/images/google.svg';
 import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
+import { APP_CONFIG } from 'config/app.config';
 
 export default function LoginCard() {
   const { t } = useTranslation('login');
@@ -84,14 +85,21 @@ export default function LoginCard() {
                 {t('login:signInButton')}
               </LoginButton>
             </div>
-            <Link scroll={false} href={'/signup'} passHref>
-              <p
-                data-test-id="signup-link"
-                className="mt-2 text-center text-sm text-zinc-600 underline hover:cursor-pointer"
-              >
-                {t('login:dontHaveAccount')}
+            {/* Show signup link only if signup is enabled */}
+            {APP_CONFIG.SIGNUP_ENABLED ? (
+              <Link scroll={false} href={'/signup'} passHref>
+                <p
+                  data-test-id="signup-link"
+                  className="mt-2 text-center text-sm text-zinc-600 underline hover:cursor-pointer"
+                >
+                  {t('login:dontHaveAccount')}
+                </p>
+              </Link>
+            ) : (
+              <p className="mt-2 text-center text-sm text-gray-500">
+                {APP_CONFIG.SIGNUP_DISABLED_MESSAGE}
               </p>
-            </Link>
+            )}
           </Form>
         )}
       </Formik>

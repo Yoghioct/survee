@@ -5,6 +5,7 @@ import { NextPageContext } from 'next';
 import SignUpCard from 'features/authorization/SignUpCard';
 import StandardPageWrapper from 'layout/StandardPageWrapper';
 import withAnimation from 'shared/HOC/withAnimation';
+import { APP_CONFIG } from 'config/app.config';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -13,6 +14,16 @@ export async function getServerSideProps(context: NextPageContext) {
     return {
       redirect: {
         destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  // Redirect to login if signup is disabled
+  if (!APP_CONFIG.SIGNUP_ENABLED) {
+    return {
+      redirect: {
+        destination: '/login?message=signup-disabled',
         permanent: false,
       },
     };

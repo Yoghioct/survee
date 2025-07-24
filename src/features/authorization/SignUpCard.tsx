@@ -6,6 +6,7 @@ import Input from 'shared/components/Input/Input';
 import { useRegisterManager } from 'features/authorization/managers/registerManager';
 import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
+import { APP_CONFIG } from 'config/app.config';
 
 export default function SignUpCard() {
   const { t } = useTranslation('signup');
@@ -13,6 +14,58 @@ export default function SignUpCard() {
   const { initialValues, onSubmit, SignupSchema, isRegistering } =
     useRegisterManager();
 
+  // If signup is disabled, show disabled form
+  if (!APP_CONFIG.SIGNUP_ENABLED) {
+    return (
+      <AuthFormWrapper>
+        <Header>{t('heading')}</Header>
+        <div className="flex w-full flex-col">
+          <Input
+            type="text"
+            name="name"
+            value=""
+            required
+            disabled
+            placeholder={t('name')}
+            className="!my-1 opacity-50"
+          />
+          <Input
+            type="email"
+            className="!my-1 opacity-50"
+            value=""
+            required
+            disabled
+            placeholder={t('email')}
+          />
+          <Input
+            type="password"
+            className="!my-1 opacity-50"
+            value=""
+            required
+            disabled
+            placeholder={t('password')}
+          />
+          
+          <div className="flex flex-col items-center justify-center">
+            <div className="mb-2 mt-1 px-6 py-3 border border-gray-300 bg-gray-100 text-gray-500 rounded-lg text-center">
+              {t('signUpButton')} - Currently Disabled
+            </div>
+            <p className="text-sm text-gray-500 text-center max-w-sm">
+              {APP_CONFIG.SIGNUP_DISABLED_MESSAGE}
+            </p>
+          </div>
+          
+          <Link scroll={false} href={'/login'} passHref>
+            <p className="mt-2 text-center text-sm text-zinc-600 underline hover:cursor-pointer">
+              {t('alreadyHaveAccount')}
+            </p>
+          </Link>
+        </div>
+      </AuthFormWrapper>
+    );
+  }
+
+  // Normal signup form when enabled
   return (
     <AuthFormWrapper>
       <Header>{t('heading')}</Header>
