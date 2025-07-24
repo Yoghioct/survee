@@ -62,8 +62,36 @@ module.exports = nextTranslate({
           },
         ],
       },
+      // Cache control for favicon files
       {
-        source: '/(favicon|android-chrome|apple-touch).*\\.(ico|png)',
+        source: '/favicon-:size*.:ext(ico|png)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/android-chrome-:size*.:ext(png)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/apple-touch-icon.:ext(png)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/favicon.:ext(ico|png)',
         headers: [
           {
             key: 'Cache-Control',
